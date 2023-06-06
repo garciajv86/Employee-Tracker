@@ -27,7 +27,7 @@ function addDepartment() {
       }
     ])
     .then(answer => {
-      connection.query('INSERT INTO department SET ?', answer, (err, results) => {
+      connection.query('INSERT INTO departments (name) VALUES (?)', [answer.name], (err, results) => {
         if (err) throw err;
         console.log('Department added successfully!');
         startApp();
