@@ -23,23 +23,20 @@ async function viewAllEmployees(connection) {
 // TODO: Create the function to add an employees
 async function addEmployee(connection) {
   try {
-    const [roles] = await connection.query("SELECT title FROM roles");
-    const roleTitles = roles.map((role) => role.title);
-
-    if (roleTitles.length === 0) {
-      console.error(
-        "No roles found. Please add roles before adding an employee."
-      );
-      return;
-    }
-
-    const [managers] = await connection.query(
-      "SELECT id, CONCAT(first_name, ' ', last_name) AS full_name FROM employees"
-    );
-    const managerChoices = managers.map((manager) => ({
-      name: manager.full_name,
-      value: manager.id,
+    const [roles] = await connection.query("SELECT id, title FROM roles");
+    const roleChoices = roles.map((role) => ({
+      name: role.title,
+      value: role.id,
     }));
+
+    const [managers] = await connection.query("SELECT id, CONCAT(first_name, ' ', last_name) AS full_name FROM employees");
+    const managerChoices = [
+      { name: "None", value: null }, // Option for no manager
+      ...managers.map((manager) => ({
+        name: manager.full_name,
+        value: manager.id,
+      })),
+    ];
 
     const prompt = inquirer.createPromptModule();
 
@@ -47,48 +44,36 @@ async function addEmployee(connection) {
       {
         type: "input",
         name: "firstName",
-        message: "Enter employee's first name:",
+        message: "Enter the employee's first name:",
       },
       {
         type: "input",
         name: "lastName",
-        message: "Enter employee's last name:",
+        message: "Enter the employee's last name:",
       },
       {
         type: "list",
-        name: "role",
-        message: "Select employee's role:",
-        choices: roleTitles,
+        name: "roleId",
+        message: "Select the employee's role:",
+        choices: roleChoices,
       },
       {
         type: "list",
         name: "managerId",
-        message: "Select employee's manager:",
+        message: "Select the employee's manager:",
         choices: managerChoices,
       },
     ]);
 
-    // Get the ID of the selected role
-    const [selectedRole] = await connection.query(
-      "SELECT id FROM roles WHERE title = ?",
-      [employeeData.role]
-    );
-    const roleId = selectedRole[0].id;
-
-    const query =
-      "INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)";
-    await connection.query(query, [
-      employeeData.firstName,
-      employeeData.lastName,
-      roleId,
-      employeeData.managerId,
-    ]);
+    const query = "INSERT INTO employees (manager_id, role_id, first_name, last_name) VALUES (?, ?, ?, ?)";
+    await connection.query(query, [employeeData.managerId, employeeData.roleId, employeeData.firstName, employeeData.lastName]);
 
     console.log("Employee added successfully!");
   } catch (error) {
     console.error("Failed to add employee:", error);
   }
 }
+
 
 //* WHEN I choose to update an employee role
 //* THEN I am prompted to select an employee to update and their new role and this information is updated in the database
