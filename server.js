@@ -39,22 +39,22 @@ async function startApp() {
         department.viewAllDepartments(connection);
         break;
       case "Add a department":
-        department.addDepartment(connection);
+        await department.addDepartment(connection);
         break;
       case "View all employees":
         employee.viewAllEmployees(connection);
         break;
       case "Add an employee":
-        employee.addEmployee(connection);
+        await employee.addEmployee(connection);
         break;
       case "Update an employee role":
-        employee.updateEmployeeRole(connection);
+        await employee.updateEmployeeRole(connection);
         break;
       case "View all roles":
         role.viewAllRoles(connection);
         break;
       case "Add a role":
-        role.addRole(connection);
+        await role.addRole(connection);
         break;
       case "Exit":
         console.log("Goodbye!");

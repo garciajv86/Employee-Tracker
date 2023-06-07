@@ -1,38 +1,45 @@
-const inquirer = require('inquirer');
-const connection = require('../db/connection');
+const inquirer = require("inquirer");
 
 //* WHEN I choose to view all departments
 //* THEN I am presented with a formatted table showing department names and department ids
 
 // TODO: Create the function to view all departments
-function viewAllDepartments() {
-  connection.query('SELECT * FROM department', (err, results) => {
-    if (err) throw err;
-    console.table(results);
-    startApp();
-  });
+async function viewAllDepartments(connection) {
+  try {
+    //* Execute the SQL query to fetch all departments
+    const query = "SELECT * FROM departments";
+    const [rows] = await connection.query(query);
+
+    //* Use console.table to display the departments
+    console.table(rows);
+  } catch (error) {
+    throw new Error("Failed to fetch departments from the database");
+  }
 }
 
 //* WHEN I choose to add a department
 //* THEN I am prompted to enter the name of the department and that department is added to the database
 
 // TODO: Create the function to add a department
-function addDepartment() {
-  inquirer
-    .prompt([
+async function addDepartment(connection) {
+  try {
+    //* Prompt for the department name
+    const { departmentName } = await inquirer.prompt([
       {
-        type: 'input',
-        name: 'name',
-        message: 'Enter the name of the department:'
-      }
-    ])
-    .then(answer => {
-      connection.query('INSERT INTO departments (name) VALUES (?)', [answer.name], (err, results) => {
-        if (err) throw err;
-        console.log('Department added successfully!');
-        startApp();
-      });
-    });
+        type: "input",
+        name: "departmentName",
+        message: "Enter the name of the department:",
+      },
+    ]);
+
+    //* Execute the SQL query to insert the new department into the database
+    const query = "INSERT INTO departments (name) VALUES (?)";
+    await connection.query(query, departmentName);
+
+    console.log("Department added successfully!");
+  } catch (error) {
+    console.error("Failed to add department:", error);
+  }
 }
 
 //* exports the functions
