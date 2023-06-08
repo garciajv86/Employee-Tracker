@@ -87,9 +87,7 @@ async function addEmployee(connection) {
 
 async function updateEmployeeRole(connection) {
   try {
-    const [employees] = await connection.query(
-      "SELECT id, CONCAT(first_name, ' ', last_name) AS full_name FROM employees"
-    );
+    const [employees] = await connection.query("SELECT id, CONCAT(first_name, ' ', last_name) AS full_name FROM employees");
     const employeeChoices = employees.map((employee) => ({
       name: employee.full_name,
       value: employee.id,
@@ -103,29 +101,55 @@ async function updateEmployeeRole(connection) {
 
     const prompt = inquirer.createPromptModule();
 
-    const updateData = await prompt([
-      {
-        type: "list",
-        name: "employeeId",
-        message: "Select the employee to update:",
-        choices: employeeChoices,
-      },
-      {
-        type: "list",
-        name: "roleId",
-        message: "Select the new role for the employee:",
-        choices: roleChoices,
-      },
-    ]);
+    const getUpdateData = async () => {
+      return prompt([
+        {
+          type: "list",
+          name: "employeeId",
+          message: "Select the employee to update:",
+          choices: employeeChoices,
+        },
+        {
+          type: "list",
+          name: "roleId",
+          message: "Select the new role for the employee:",
+          choices: roleChoices,
+        },
+      ]).then((answers) => {
+        return prompt([
+          {
+            type: "list",
+            name: "managerId",
+            message: "Select the new manager for the employee:",
+            choices: [
+              { name: "None", value: null },
+              ...employeeChoices.filter((employee) => employee.value !== answers.employeeId),
+            ],
+          },
+        ]).then((managerAnswer) => {
+          return {
+            ...answers,
+            managerId: managerAnswer.managerId,
+          };
+        });
+      });
+    };
 
-    const query = "UPDATE employees SET role_id = ? WHERE id = ?";
-    await connection.query(query, [updateData.roleId, updateData.employeeId]);
+    const updateData = await getUpdateData();
 
-    console.log("Employee role updated successfully!");
+    const query = "UPDATE employees SET role_id = ?, manager_id = ? WHERE id = ?";
+    await connection.query(query, [updateData.roleId, updateData.managerId, updateData.employeeId]);
+
+    console.log("Employee role and manager updated successfully!");
   } catch (error) {
-    console.error("Failed to update employee role:", error);
+    console.error("Failed to update employee role and manager:", error);
   }
 }
+
+
+
+
+
 
 //* exports the functions
 module.exports = { viewAllEmployees, addEmployee, updateEmployeeRole };
