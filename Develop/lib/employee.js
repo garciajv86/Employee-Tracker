@@ -29,7 +29,9 @@ async function addEmployee(connection) {
       value: role.id,
     }));
 
-    const [managers] = await connection.query("SELECT id, CONCAT(first_name, ' ', last_name) AS full_name FROM employees");
+    const [managers] = await connection.query(
+      "SELECT id, CONCAT(first_name, ' ', last_name) AS full_name FROM employees"
+    );
     const managerChoices = [
       { name: "None", value: null }, // Option for no manager
       ...managers.map((manager) => ({
@@ -65,8 +67,14 @@ async function addEmployee(connection) {
       },
     ]);
 
-    const query = "INSERT INTO employees (manager_id, role_id, first_name, last_name) VALUES (?, ?, ?, ?)";
-    await connection.query(query, [employeeData.managerId, employeeData.roleId, employeeData.firstName, employeeData.lastName]);
+    const query =
+      "INSERT INTO employees (manager_id, role_id, first_name, last_name) VALUES (?, ?, ?, ?)";
+    await connection.query(query, [
+      employeeData.managerId,
+      employeeData.roleId,
+      employeeData.firstName,
+      employeeData.lastName,
+    ]);
 
     console.log("Employee added successfully!");
   } catch (error) {
@@ -74,9 +82,50 @@ async function addEmployee(connection) {
   }
 }
 
-
 //* WHEN I choose to update an employee role
 //* THEN I am prompted to select an employee to update and their new role and this information is updated in the database
 
+async function updateEmployeeRole(connection) {
+  try {
+    const [employees] = await connection.query(
+      "SELECT id, CONCAT(first_name, ' ', last_name) AS full_name FROM employees"
+    );
+    const employeeChoices = employees.map((employee) => ({
+      name: employee.full_name,
+      value: employee.id,
+    }));
+
+    const [roles] = await connection.query("SELECT id, title FROM roles");
+    const roleChoices = roles.map((role) => ({
+      name: role.title,
+      value: role.id,
+    }));
+
+    const prompt = inquirer.createPromptModule();
+
+    const updateData = await prompt([
+      {
+        type: "list",
+        name: "employeeId",
+        message: "Select the employee to update:",
+        choices: employeeChoices,
+      },
+      {
+        type: "list",
+        name: "roleId",
+        message: "Select the new role for the employee:",
+        choices: roleChoices,
+      },
+    ]);
+
+    const query = "UPDATE employees SET role_id = ? WHERE id = ?";
+    await connection.query(query, [updateData.roleId, updateData.employeeId]);
+
+    console.log("Employee role updated successfully!");
+  } catch (error) {
+    console.error("Failed to update employee role:", error);
+  }
+}
+
 //* exports the functions
-module.exports = { viewAllEmployees, addEmployee };
+module.exports = { viewAllEmployees, addEmployee, updateEmployeeRole };
