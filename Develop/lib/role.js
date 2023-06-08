@@ -1,11 +1,10 @@
 const inquirer = require("inquirer");
-const connection = require("../../config/dbConfig");
 
 //* WHEN I choose to view all roles
 //* THEN I am presented with the job title, role id, the department that role belongs to, and the salary for that role
 
 // TODO: Create the function to view all roles
-function viewAllRoles(connection) {
+function viewAllRoles(connection, startApp) {
   
 }
 
@@ -13,7 +12,7 @@ function viewAllRoles(connection) {
 //* THEN I am prompted to enter the name, salary, and department for the role and that role is added to the database
 
 // TODO: Create the function to add a role
-function addRole() {
+function addRole(connection, startApp) {
 
 }
 

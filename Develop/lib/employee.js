@@ -6,12 +6,13 @@ const inquirer = require("inquirer");
 //* THEN I am presented with a formatted table showing employee data, including employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to
 
 // TODO: Create the function to view all employees
-async function viewAllEmployees(connection) {
+async function viewAllEmployees(connection, startApp) {
   try {
     const query = "SELECT * FROM employees";
     const [rows] = await connection.query(query);
 
     console.table(rows);
+    startApp();
   } catch (error) {
     console.error("Failed to fetch employees from the database", error);
   }
@@ -21,7 +22,7 @@ async function viewAllEmployees(connection) {
 //* THEN I am prompted to enter the employee’s first name, last name, role, and manager, and that employee is added to the database
 
 // TODO: Create the function to add an employees
-async function addEmployee(connection) {
+async function addEmployee(connection, startApp) {
   try {
     const [roles] = await connection.query("SELECT id, title FROM roles");
     const roleChoices = roles.map((role) => ({
@@ -77,6 +78,7 @@ async function addEmployee(connection) {
     ]);
 
     console.log("Employee added successfully!");
+    startApp();
   } catch (error) {
     console.error("Failed to add employee:", error);
   }
@@ -85,7 +87,7 @@ async function addEmployee(connection) {
 //* WHEN I choose to update an employee role
 //* THEN I am prompted to select an employee to update and their new role and this information is updated in the database
 
-async function updateEmployeeRole(connection) {
+async function updateEmployeeRole(connection, startApp) {
   try {
     const [employees] = await connection.query("SELECT id, CONCAT(first_name, ' ', last_name) AS full_name FROM employees");
     const employeeChoices = employees.map((employee) => ({
@@ -141,6 +143,7 @@ async function updateEmployeeRole(connection) {
     await connection.query(query, [updateData.roleId, updateData.managerId, updateData.employeeId]);
 
     console.log("Employee role and manager updated successfully!");
+    startApp();
   } catch (error) {
     console.error("Failed to update employee role and manager:", error);
   }

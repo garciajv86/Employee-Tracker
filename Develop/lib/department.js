@@ -4,7 +4,7 @@ const inquirer = require("inquirer");
 //* THEN I am presented with a formatted table showing department names and department ids
 
 // TODO: Create the function to view all departments
-async function viewAllDepartments(connection) {
+async function viewAllDepartments(connection, startApp) {
   try {
     //* Execute the SQL query to fetch all departments
     const query = "SELECT * FROM departments";
@@ -12,6 +12,7 @@ async function viewAllDepartments(connection) {
 
     //* Use console.table to display the departments
     console.table(rows);
+    startApp();
   } catch (error) {
     throw new Error("Failed to fetch departments from the database");
   }
@@ -21,7 +22,7 @@ async function viewAllDepartments(connection) {
 //* THEN I am prompted to enter the name of the department and that department is added to the database
 
 // TODO: Create the function to add a department
-async function addDepartment(connection) {
+async function addDepartment(connection, startApp) {
   try {
     //* Prompt for the department name
     const { departmentName } = await inquirer.prompt([
@@ -37,6 +38,7 @@ async function addDepartment(connection) {
     await connection.query(query, departmentName);
 
     console.log("Department added successfully!");
+    startApp();
   } catch (error) {
     console.error("Failed to add department:", error);
   }

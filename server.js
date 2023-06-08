@@ -36,25 +36,25 @@ async function startApp() {
   try {
     switch (selectedOption.action) {
       case "View all departments":
-        department.viewAllDepartments(connection);
+        department.viewAllDepartments(connection, startApp);
         break;
       case "Add a department":
-        await department.addDepartment(connection);
+        await department.addDepartment(connection, startApp);
         break;
       case "View all employees":
-        employee.viewAllEmployees(connection);
+        employee.viewAllEmployees(connection), startApp;
         break;
       case "Add an employee":
-        await employee.addEmployee(connection);
+        await employee.addEmployee(connection, startApp);
         break;
       case "Update an employee role":
-        await employee.updateEmployeeRole(connection);
+        await employee.updateEmployeeRole(connection, startApp);
         break;
       case "View all roles":
-        role.viewAllRoles(connection);
+        role.viewAllRoles(connection, startApp);
         break;
       case "Add a role":
-        await role.addRole(connection);
+        await role.addRole(connection, startApp);
         break;
       case "Exit":
         console.log("Goodbye!");
@@ -63,7 +63,7 @@ async function startApp() {
   } catch (error) {
     console.error("Error occurred:", error);
   } finally {
-    // Close the database connection
+    //* Close the database connection
     connection.end();
   }
 }
