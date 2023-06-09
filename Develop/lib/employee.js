@@ -89,7 +89,9 @@ async function addEmployee(connection, startApp) {
 
 async function updateEmployeeRole(connection, startApp) {
   try {
-    const [employees] = await connection.query("SELECT id, CONCAT(first_name, ' ', last_name) AS full_name FROM employees");
+    const [employees] = await connection.query(
+      "SELECT id, CONCAT(first_name, ' ', last_name) AS full_name FROM employees"
+    );
     const employeeChoices = employees.map((employee) => ({
       name: employee.full_name,
       value: employee.id,
@@ -125,7 +127,9 @@ async function updateEmployeeRole(connection, startApp) {
             message: "Select the new manager for the employee:",
             choices: [
               { name: "None", value: null },
-              ...employeeChoices.filter((employee) => employee.value !== answers.employeeId),
+              ...employeeChoices.filter(
+                (employee) => employee.value !== answers.employeeId
+              ),
             ],
           },
         ]).then((managerAnswer) => {
@@ -139,8 +143,13 @@ async function updateEmployeeRole(connection, startApp) {
 
     const updateData = await getUpdateData();
 
-    const query = "UPDATE employees SET role_id = ?, manager_id = ? WHERE id = ?";
-    await connection.query(query, [updateData.roleId, updateData.managerId, updateData.employeeId]);
+    const query =
+      "UPDATE employees SET role_id = ?, manager_id = ? WHERE id = ?";
+    await connection.query(query, [
+      updateData.roleId,
+      updateData.managerId,
+      updateData.employeeId,
+    ]);
 
     console.log("Employee role and manager updated successfully!");
     startApp();
@@ -148,11 +157,6 @@ async function updateEmployeeRole(connection, startApp) {
     console.error("Failed to update employee role and manager:", error);
   }
 }
-
-
-
-
-
 
 //* exports the functions
 module.exports = { viewAllEmployees, addEmployee, updateEmployeeRole };
