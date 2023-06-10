@@ -1,7 +1,4 @@
 const inquirer = require("inquirer");
-// const { viewAllRoles } = require("./role");
-// const { connection } = require("../../config/dbConfig");
-
 //* WHEN I choose to view all employees
 //* THEN I am presented with a formatted table showing employee data, including employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to
 
