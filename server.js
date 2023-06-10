@@ -10,6 +10,28 @@ const role = require("./Develop/lib/role");
 
 //* Function to start the application
 async function startApp() {
+  const appTitle = `
+  _______________________________________________________________________________
+  |                                                                             |
+  |                                                                             |
+  |     EEEEE   M       M  PPPPPP   L      OOOOOOOOO  Y     Y  EEEEE  EEEEE     |               
+  |     E       M M   M M  P    P   L      O       O   Y   Y   E      E         |
+  |     EEEE    M  M M  M  PPPPPP   L      O       O     Y     EEEE   EEEE      |  
+  |     E       M   M   M  P        L      O       O     Y     E      E         |
+  |     EEEEE   M       M  P        LLLLL  OOOOOOOOO     Y     EEEEE  EEEEE     |           
+  |                                                                             |
+  |                                                                             |
+  |     M       M  AAAAA  N     N  AAAAA   GGGG  EEEEE  RRRR                    |
+  |     MM     MM  A   A  NN    N  A   A  G      E      R   R                   |
+  |     M M   M M  AAAAA  N N   N  AAAAA  G  GG  EEEE   RRRR                    |
+  |     M  M M  M  A   A  N  N  N  A   A  G   G  E      R  R                    |
+  |     M   M   M  A   A  N   N N  A   A   GGG   EEEEE  R   R                   |
+  |                                                                             |
+  |                                                                             |
+  | ____________________________________________________________________________|                                                 
+`;
+
+  console.log(appTitle);
   const connection = await createConnection(buildConnectionOptions());
 
   const { createPromptModule } = inquirer;
