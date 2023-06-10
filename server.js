@@ -8,9 +8,7 @@ const department = require("./Develop/lib/department");
 const employee = require("./Develop/lib/employee");
 const role = require("./Develop/lib/role");
 
-//* Function to start the application
-async function startApp() {
-  const appTitle = `
+const appTitle = `
   _______________________________________________________________________________
   |                                                                             |
   |                                                                             |
@@ -31,7 +29,10 @@ async function startApp() {
   | ____________________________________________________________________________|                                                 
 `;
 
-  console.log(appTitle);
+console.log(appTitle);
+
+//* Function to start the application
+async function startApp() {
   const connection = await createConnection(buildConnectionOptions());
 
   const { createPromptModule } = inquirer;
