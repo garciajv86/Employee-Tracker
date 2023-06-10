@@ -24,7 +24,13 @@ Need to add the link to the walk through video.
 [Employee_Tracker](https://)
 
 ## ScreenShot
-Need to add some screenshots of my app.
+
+<br>
+
+![App_Screenshot](./assets/appScreenshot.png)
+
+<br>
+
 ## Installation
 
 This app requires the MySQL database to be installed on your computer, I provided a link below.<br>
