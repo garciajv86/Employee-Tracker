@@ -65,7 +65,7 @@ async function startApp() {
         await department.addDepartment(connection, startApp);
         break;
       case "View all employees":
-        employee.viewAllEmployees(connection), startApp;
+        employee.viewAllEmployees(connection, startApp);
         break;
       case "Add an employee":
         await employee.addEmployee(connection, startApp);
