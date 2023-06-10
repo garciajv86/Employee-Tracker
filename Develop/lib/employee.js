@@ -8,7 +8,21 @@ const inquirer = require("inquirer");
 // TODO: Create the function to view all employees
 async function viewAllEmployees(connection, startApp) {
   try {
-    const query = "SELECT * FROM employees";
+    const query = `
+      SELECT 
+        employees.id,
+        employees.first_name,
+        employees.last_name,
+        roles.title AS role,
+        roles.salary,
+        departments.name AS department,
+        CONCAT(managers.first_name, ' ', managers.last_name) AS manager
+      FROM 
+        employees
+      INNER JOIN roles ON employees.role_id = roles.id
+      INNER JOIN departments ON roles.department_id = departments.id
+      LEFT JOIN employees managers ON employees.manager_id = managers.id
+    `;
     const [rows] = await connection.query(query);
 
     console.table(rows);

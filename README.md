@@ -20,10 +20,11 @@ This project is an employee tracker content management app for business owners t
 ## Link
 
 Below is a link to a walk through video demonstrating the app in use:<br>
+Need to add the link to the walk through video.
 [Employee_Tracker](https://)
 
 ## ScreenShot
-
+Need to add some screenshots of my app.
 ## Installation
 
 This app requires the MySQL database to be installed on your computer, I provided a link below.<br>
