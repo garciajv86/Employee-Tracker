@@ -4,7 +4,7 @@
 
 ## Description
 
-This project is an employee tracker content management app for business owners to be able to manager their employees, roles, departments and managers in their database via the command line. The database I designed is using the MySQL database. My biggest challenge with this project was creating the functions that had to manupulate the data in the database, which for me was challenging, I struggled but in the end completed. Even though Ive completed the challenge Id still love to further my knowledge on the subject in the future.
+This project is an employee tracker content management app for business owners to be able to manager their employees, roles, departments and managers in their database via the command line. The database I designed is using the MySQL database. My biggest challenge with this project was creating the functions that had to manipulate the data in the database, which for me was challenging, I struggled but in the end completed. Even though Ive completed the challenge Id still love to further my knowledge on the subject in the future.
 
 ## Table of Contents
 
@@ -20,8 +20,7 @@ This project is an employee tracker content management app for business owners t
 ## Link
 
 Below is a link to a walk through video demonstrating the app in use:<br>
-Need to add the link to the walk through video.
-[Employee_Tracker](https://)
+[Employee_Tracker](https://drive.google.com/file/d/19NN1wV88RTxYi4U2FR6Hnq_ky4EVGg6K/view)
 
 ## ScreenShot
 
