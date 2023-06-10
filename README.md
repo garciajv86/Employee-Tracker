@@ -20,7 +20,8 @@ This project is an employee tracker content management app for business owners t
 ## Link
 
 Below is a link to a walk through video demonstrating the app in use:<br>
-[Employee_Tracker](https://drive.google.com/file/d/19NN1wV88RTxYi4U2FR6Hnq_ky4EVGg6K/view)
+[Employee_Tracker](https://drive.google.com/file/d/19NN1wV88RTxYi4U2FR6Hnq_ky4EVGg6K/view)<br>
+[Projects_Repo](https://github.com/garciajv86/Employee-Tracker)
 
 ## ScreenShot
 
